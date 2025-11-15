@@ -1,7 +1,7 @@
-﻿using ScottPlot;
-using Microsoft.SemanticKernel;
+﻿using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
+using ScottPlot;
 
 namespace SemanticKernelSalesAnalyzer
 {
@@ -48,7 +48,7 @@ namespace SemanticKernelSalesAnalyzer
             histScatter.Color = Colors.Blue;
             histScatter.LegendText = "Historical Sales";
 
-            // Add the *entire* prediction line and markers (Fixed: uses Scatter for line/markers)
+            // Add the *entire* prediction line and markers
             var predScatter = plt.Add.Scatter(predDates, predSales);
             predScatter.LineWidth = 2; // Add a line to connect the predictions
             predScatter.MarkerSize = 10;
@@ -77,10 +77,9 @@ namespace SemanticKernelSalesAnalyzer
             var allTickLabels = dateLabels.Concat(new[] { "2024-01 (P)", "2024-02 (P)", "2024-03 (P)" }).ToArray(); // Updated labels for prediction months
             plt.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(allDates, allTickLabels);
 
-            // --- FIX: Rotate X-axis tick labels to 45 degrees ---
+            // X-axis tick labels to 45 degrees
             plt.Axes.Bottom.TickLabelStyle.Rotation = 45;
             plt.Axes.Bottom.TickLabelStyle.Alignment = Alignment.LowerCenter; // Adjust alignment for rotated labels
-            // ----------------------------------------------------
 
             // Save the plot
             string outputPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "sales_chart.png");
@@ -119,7 +118,7 @@ Please provide ONLY the content inside the <SALES_PREDICTIONS> tags.";
             var response = await chatService.GetChatMessageContentAsync(chat, executionSettings: settings);
             var fullResponse = response.Content ?? "<SALES_PREDICTIONS>42000.00,45000.00,48000.00</SALES_PREDICTIONS>"; // Fallback now includes the tag
 
-            // 4. CLEAN UP AND PARSE THE RESPONSE (Handling potential tags)
+            // Clean up and parse the response (Handling potential tags)
             string predictionText;
 
             // Try to extract content between the tags, or use the full response if tags are missing
@@ -155,7 +154,5 @@ Please provide ONLY the content inside the <SALES_PREDICTIONS> tags.";
             while (predictions.Count < 3) predictions.Add(0m);
             return predictions.Take(3).ToList();
         }
-
-
     }
 }
