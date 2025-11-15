@@ -1,0 +1,1 @@
+# nl-semantic-kernel-sales-analyzer
