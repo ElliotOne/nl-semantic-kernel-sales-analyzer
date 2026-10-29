@@ -64,7 +64,7 @@ Performs statistical anomaly detection on the sales data (using standard deviati
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+See the [LICENSE](https://github.com/ElliotOne/nl-semantic-kernel-sales-analyzer/blob/master/LICENSE) file for details. &#x20;
 
 ## Contributing
 
